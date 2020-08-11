@@ -4,18 +4,43 @@
 	<title>Lab - Multimedia Programming 2563 ITKMITL</title>
 	<link rel=stylesheet href="../src/reset.css">
 	<link rel=stylesheet href="lab.css">
+	<link rel="stylesheet" href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body class="paper">
-	<div id="app">
-		<input type="number" v-model="n">
-		<input type="number" v-model="row">
+	<div id="app" class="mx-32 px-10 py-10 rounded-lg bg-red-500">
+		<div class="mb-10 font-serif text-center">
+			<h1 class="text-4xl font-bold text-orange-200">มาท่องสูตรคูณกันเถอะ !</h1>
+		</div>
+		<div class="flex mx-64 font-serif text-center">
+			<div class="flex-1">
+				<h3 class="text-xl">ตัวคูณ</h3>
+				<input class="rounded-lg text-center text-xl" type="number" v-model="n">
+			</div>
+			<div class="flex-1">
+				<h3 class="text-xl">จำนวนแถว</h3>
+				<input class="rounded-lg text-center text-xl" type="number" v-model="row">
+			</div>
+		</div>
+		
 		<div class="space"></div>
-		<h3>สูตรคูณแม่ {{n}}</h3>
-		<h5>แม่ก่อนหน้า -> แม่ {{before_n}}</h5>
-		<h4 class="row" v-for="i in r">
-			{{n}} x {{i}} = {{multiply(i)}}
-		</h4>
+
+		<div class="text-center mt-8">
+			<h2 class="text-3xl font-bold">สูตรคูณแม่ {{n}}</h3>
+			<h5 class="text-sm font-thin">แม่ก่อนหน้า -> แม่ {{before_n}}</h5>
+			<h4 class="mx-64 bg-gray-200 m-3 text-xl rounded-lg italic" v-for="i in r">
+				<div v-if="i%2!=0" class="text-left pl-32">
+					{{n}} x {{i}} = {{multiply(i)}}
+				</div>
+				<div v-if="i%2==0" class="text-right pr-32">
+					{{n}} x {{i}} = {{multiply(i)}}
+				</div>
+			</h4>
+			<h4 class="text-xl font-bold">ผลรวมผลคูณ : {{total}}</h5>
+			</div>
+			
+		</div>
+		
 	</div>
 
 	<script>
@@ -34,6 +59,9 @@
 			computed: {
 				r: function(){
 					return parseInt(this.row)
+				},
+				total: function(){
+					return this.row*(parseInt(this.n)+parseInt(this.n*this.row))/2
 				},
 				x2: function(){
 					return this.n*2
