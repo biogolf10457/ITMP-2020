@@ -8,8 +8,10 @@
 </head>
 <body>
 	<div id="app">
-		<h2>{{i+1}}. {{fact.text}}</h2>
-		<span v-for="f in fact.user.name">{{f}}</span>
+		<div>
+			<h2>{{i+1}}. {{fact.text}}</h2>
+			<span v-for="f in fact.user.name">{{f}}</span>
+		</div>
 		<div>
 			<button @click="back()">back</button>
 			<button @click="next()">next</button>
