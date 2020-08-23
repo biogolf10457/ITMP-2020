@@ -17,7 +17,7 @@
 			</div>
 			<div class="col-8 info">
 				<p class="fact"><b>{{i+1}}.</b> {{fact.text}}</p>
-				<span v-for="f in fact.user.name">post by {{f}}</span>
+				<span>post by</span><span v-for="f in fact.user.name"> {{f}}</span>
 			</div>
 			<div class="col-2">
 				<button @click="next()">next</button>
