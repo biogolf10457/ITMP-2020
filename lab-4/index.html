@@ -31,11 +31,20 @@
 				{{score}} คะแนน
 			</div>
 		</section>
+
+		<div id="canvas_footer2">
+			<button @click="start">START</button>
+		</div>
+		<div id="canvas_footer3">
+			<p>Time's up !</p>
+			<button @click="restart">RESTART</button>
+		</div>
+
 	</div>
 
 	<script>
-		let picklight = "80%" //เลือกว่ารอบนี้ อันพิเศษจะมีความสว่าง 20%
-		//document.registerElement('a-dot') //ให้ vue รู้จัก a-dot
+		let picklight = "70%" //เลือกว่ารอบนี้ อันพิเศษจะมีความสว่าง 80%
+		//document.registerElement('a-dot') //ให้ vue รู้จัก a-dot				 
 
 		function rand(start,stop){//สร้างฟังก์ชัน random ไว้ใช้
 			let shift = (stop-start)+1
@@ -51,17 +60,61 @@
 				score:0, //คะแนนเริ่มต้น
 				pick:2, //หมายเลขวงกลมที่จะสีแตกต่างจากก้อนอื่นๆ
 				l:50,//ความสว่างของสีทั่วไปในรอบนี้
+				isPlayed:false//ตรวจสอบว่าเกมเริ่มอยู่หรือไม่
 			},
 			methods: {
 				check: function(e){
-					console.log(e)
+					if(this.time > 0 && this.isPlayed){
+						if(e.target.dataset.pick){
+							this.score++;
+							this.correct();
+						}else{
+							if(this.score > 0){
+								this.score--;
+							}
+						}
+					}
 					//ทำให้เช็คก่อนว่าถูกมั้ย
 				},
 				correct: function(){
 					//เข้าด่านต่อไป
 					this.row = rand(2,6)
 					this.pick = rand(1,this.row*this.row)
+					this.h = rand(0,360)
+					this.l = rand(20,50)
 					console.log('Correct!')
+				},
+				start: function(){
+					document.querySelector('#canvas_footer2').style.display = "none";
+					this.isPlayed = true;
+					let counter = setInterval(()=>{
+						if (this.time>0 && this.isPlayed) {
+							this.time--
+						}else{
+							this.isPlayed = false;
+							document.querySelector('#canvas_footer3').style.display = "flex";
+							clearInterval(counter)
+						}
+					},1000);
+				},
+				restart: function(){
+					document.querySelector('#canvas_footer3').style.display = "none";
+					this.isPlayed = true;
+					this.row = 2;
+					this.pick = rand(1,this.row*this.row)
+					this.h = rand(0,360)
+					this.l = rand(20,50)
+					this.time = 20;
+					this.score = 0;
+					let counter = setInterval(()=>{
+						if (this.time>0 && this.isPlayed) {
+							this.time--
+						}else{
+							this.isPlayed = false;
+							document.querySelector('#canvas_footer3').style.display = "flex";
+							clearInterval(counter)
+						}
+					},1000);
 				}
 			}
 		})
@@ -69,9 +122,10 @@
 		document.querySelector('#canvas').style.setProperty('--picklight',picklight);//ก็อปไปใช้อีกทีตอนแรนดอมเข้าด่านใหม่ได้
 		
 		let counter = setInterval(()=>{
-			if (app.time>0) {
+			if (app.time>0 && app.isPlayed) {
 				app.time--
 			}else{
+				app.isPlayed = false;
 				clearInterval(counter)
 			}
 		},1000);
