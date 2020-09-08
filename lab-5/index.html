@@ -74,6 +74,17 @@
 			computed:{},
 			watch:{
 				turn: function(){
+					let rndSpawn = rand(0,1)
+					if(rndSpawn == 1){
+						rndFruit = rand(0,1)
+						if(rndFruit == 1){
+							this.fruits.push({id:nextFruitId,type:11,pst:0,run:true,step:1})
+						}else{
+							this.fruits.push({id:nextFruitId,type:13,pst:0,run:true,step:1})
+						}
+						nextFruitId++;
+					}
+
 					let count = this.fruits.length
 					for (let f in this.fruits) {
 						//toggle
