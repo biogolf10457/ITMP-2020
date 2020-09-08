@@ -74,8 +74,8 @@
 			computed:{},
 			watch:{
 				turn: function(){
-					let rndSpawn = rand(0,1)
-					if(rndSpawn == 1){
+					let rndSpawn = rand(0,2)
+					if(rndSpawn > 0){
 						rndFruit = rand(0,1)
 						if(rndFruit == 1){
 							this.fruits.push({id:nextFruitId,type:12,pst:0,run:true,step:1})
@@ -113,18 +113,33 @@
 							this.fruits[f].run = false;
 						}
 					}
-				}
+					this.speed = 1000 - Math.floor(this.turn/10)*900
+					
+				},
 			}
 		})
 
-		let playing = setInterval(function(){
-			if(app.play){
+		let oldSpeed = speed;
+			/*let playing = setTimeout(function(){
+				if(app.play && oldSpeed == app.speed){
+					app.turn++
+					oldSpeed = app.speed
+					console.log(app.speed)
+				}
+				else if(app.play && app.speed != oldSpeed){
+					intervalRecursive()
+				}
+				else if(!app.play){
+					clearInterval(playing)
+				}
+			},app.speed)*/
+
+		while(app.play){
+			setTimeout(function(){
 				app.turn++
-			}
-			else{
-				clearInterval(playing)
-			}
-		},speed)
+			}, app.speed)
+		}
+		
 	</script>
 </body>
 </html>

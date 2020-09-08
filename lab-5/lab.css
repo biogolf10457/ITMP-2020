@@ -95,6 +95,7 @@ div.box{
 .box._path[data-pst="11"]{
 	transform: rotate(90deg);
 }
+
 .box._fruit{
 	background-color: yellow;
 	border-radius: 100%;
