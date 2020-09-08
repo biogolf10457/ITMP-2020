@@ -113,8 +113,9 @@
 							this.fruits[f].run = false;
 						}
 					}
-					this.speed = 1000 - Math.floor(this.score/5)*100
-					
+					if(this.speed > 600){
+						this.speed = 1000 - Math.floor(this.score/5)*100
+					}
 				},
 			}
 		})
