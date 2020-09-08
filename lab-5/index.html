@@ -85,6 +85,11 @@
 							}
 						}
 
+						//add score
+						if (this.fruits[f].pst == this.fruits[f].type && this.fruits[f].run) {
+							this.score++;
+						}
+
 						//stop
 						if(this.fruits[f].pst == 12 || this.fruits[f].pst == 16){
 							this.fruits[f].run = false;
