@@ -113,32 +113,28 @@
 							this.fruits[f].run = false;
 						}
 					}
-					this.speed = 1000 - Math.floor(this.turn/10)*900
+					this.speed = 1000 - Math.floor(this.turn/10)*50
 					
 				},
 			}
 		})
-
-		let oldSpeed = speed;
-			/*let playing = setTimeout(function(){
-				if(app.play && oldSpeed == app.speed){
-					app.turn++
-					oldSpeed = app.speed
-					console.log(app.speed)
-				}
-				else if(app.play && app.speed != oldSpeed){
-					intervalRecursive()
-				}
-				else if(!app.play){
-					clearInterval(playing)
-				}
-			},app.speed)*/
-
-		while(app.play){
-			setTimeout(function(){
+		
+		/*let playing = setInterval(function(){
+			if(app.play){
 				app.turn++
-			}, app.speed)
-		}
+			}
+			else{
+				clearInterval(playing)
+			}
+		},app.speed)*/
+		setTimeout(function sto(){
+			if (app.play) {
+				app.turn++
+				setTimeout(sto,app.speed)
+			}else{
+				clearTimeout
+			}
+		},app.speed)
 		
 	</script>
 </body>
