@@ -57,8 +57,8 @@
 				turn:0,
 				score:0,
 				fruits:[
-					{id:1,type:13,pst:6,run:true,step:1}, //13 is red
-					{id:2,type:11,pst:3,run:true,step:1}, //11 is yellow
+					{id:1,type:16,pst:6,run:true,step:1}, //16 is yellow
+					{id:2,type:12,pst:3,run:true,step:1}, //12 is red
 				]
 			},
 			methods:{
@@ -78,9 +78,9 @@
 					if(rndSpawn == 1){
 						rndFruit = rand(0,1)
 						if(rndFruit == 1){
-							this.fruits.push({id:nextFruitId,type:11,pst:0,run:true,step:1})
+							this.fruits.push({id:nextFruitId,type:12,pst:0,run:true,step:1})
 						}else{
-							this.fruits.push({id:nextFruitId,type:13,pst:0,run:true,step:1})
+							this.fruits.push({id:nextFruitId,type:16,pst:0,run:true,step:1})
 						}
 						nextFruitId++;
 					}
@@ -96,20 +96,21 @@
 							}
 						}
 
-						//add score
-						if (this.fruits[f].pst == this.fruits[f].type && this.fruits[f].run) {
-							this.score++;
-						}
-
-						//stop
-						if(this.fruits[f].pst == 12 || this.fruits[f].pst == 16){
-							this.fruits[f].run = false;
-						}
-
 						//run
 						let run = this.fruits[f].run
 						if(run){
 							this.fruits[f].pst = this.fruits[f].pst + this.fruits[f].step
+						}
+
+						//stop
+						if(this.fruits[f].pst == 12 || this.fruits[f].pst == 16){
+							//add score
+							if (this.fruits[f].pst == this.fruits[f].type && this.fruits[f].run) {
+								this.score++;
+							}else if(this.fruits[f].pst != this.fruits[f].type && this.fruits[f].run){
+								this.play = false;
+							}
+							this.fruits[f].run = false;
 						}
 					}
 				}
@@ -117,7 +118,12 @@
 		})
 
 		let playing = setInterval(function(){
-			app.turn++
+			if(app.play){
+				app.turn++
+			}
+			else{
+				clearInterval(playing)
+			}
 		},speed)
 	</script>
 </body>
